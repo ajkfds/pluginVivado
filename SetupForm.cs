@@ -16,12 +16,16 @@ namespace pluginVivado
         {
             InitializeComponent();
 
-            runXSimToolStripMenuItem.Image = Global.Icons.Play.GetImage(
+            runXSimTsmi.Image = codeEditor.Global.IconImages.Play.GetImage(
                codeEditor.Global.Controller.NavigatePanel.GetContextMenuStrip().ImageScalingSize.Height,
                ajkControls.IconImage.ColorStyle.Blue);
+
+            XilinxTsmi.Image = Global.Icons.Xilinx.GetImage(
+               codeEditor.Global.Controller.NavigatePanel.GetContextMenuStrip().ImageScalingSize.Height,
+               ajkControls.IconImage.ColorStyle.Original);
         }
 
-        private void runXSimToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RunXSimTsmi_Click(object sender, EventArgs e)
         {
             string projectName, id;
             codeEditor.Global.Controller.NavigatePanel.GetSelectedNode(out projectName, out id);
@@ -33,11 +37,15 @@ namespace pluginVivado
             //ajkControls.TabPage page = new IcarusVerilog.SimulationTab(topFile);
             //codeEditor.Global.Controller.Tabs.AddPage(page);
 
-
-
-            SimulationPanel panel = new SimulationPanel(topFile);
-            codeEditor.Controller.MainTabPage mainTabPage = new codeEditor.Controller.MainTabPage(panel, topFile.Name);
+//            SimulationPanel panel = new SimulationPanel(topFile);
+            codeEditor.Controller.MainTabPage mainTabPage = new SimulationTab(topFile);
+//            codeEditor.Controller.MainTabPage mainTabPage = new codeEditor.Controller.MainTabPage(panel, topFile.Name);
             codeEditor.Global.Controller.Tabs.AddPage(mainTabPage);
+        }
+
+        private void VivadoGUITsmi_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

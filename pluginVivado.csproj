@@ -105,6 +105,9 @@
   <ItemGroup>
     <None Include="Resources\play.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xilinx.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /I /D /Y "$(ProjectDir)\bin\$(Configuration)\$(ProjectName).dll" "$(SolutionDir)codeEditor\codeEditor\bin\$(Configuration)\dlls" 

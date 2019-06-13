@@ -17,6 +17,7 @@ namespace pluginVivado
             //public static ajkControls.IconImage ExclamationBox = new ajkControls.IconImage(Properties.Resources.exclamationBox);
             public static ajkControls.IconImage Play = new ajkControls.IconImage(Properties.Resources.play);
             public static ajkControls.IconImage Pause = new ajkControls.IconImage(Properties.Resources.pause);
+            public static ajkControls.IconImage Xilinx = new ajkControls.IconImage(Properties.Resources.xilinx);
         }
     }
 }

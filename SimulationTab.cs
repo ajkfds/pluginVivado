@@ -6,19 +6,27 @@ using System.Threading.Tasks;
 
 namespace pluginVivado
 {
-    public class SimulationTab : ajkControls.TabPage
+    public class SimulationTab : codeEditor.Controller.MainTabPage
     {
-        public SimulationTab(pluginVerilog.Data.VerilogFile topFile)
+        public SimulationTab(pluginVerilog.Data.VerilogFile topFile):base ( new SimulationPanel(topFile),topFile.Name)
         {
             Text = topFile.Name;
             CloseButtonEnable = true;
+            IconImage = codeEditor.Global.IconImages.Wave0;
 
-            panel = new SimulationPanel(topFile);
-            panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            (panel as SimulationPanel).RequestTabIconChange += changeIcon;
             Controls.Add(panel);
         }
 
-        private SimulationPanel panel;
+        private void changeIcon(ajkControls.IconImage iconImage)
+        {
+            Invoke(new Action(
+                () => {
+                    IconImage = iconImage;
+                    Invalidate();
+                }
+                ));
+        }
 
         public override void CloseButtonClicked()
         {

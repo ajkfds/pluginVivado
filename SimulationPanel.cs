@@ -35,9 +35,40 @@ namespace pluginVivado
             thread.Start();
         }
 
+        public Action<ajkControls.IconImage> RequestTabIconChange;
+
+        private int iconCount = 0;
         private void receiveLineString(string lineString)
         {
             logView.AppendLogLine(lineString);
+
+            iconCount++;
+            if (iconCount > 5) iconCount = 0;
+
+            if(RequestTabIconChange != null)
+            {
+                switch (iconCount)
+                {
+                    case 0:
+                        RequestTabIconChange(codeEditor.Global.IconImages.Wave0);
+                        break;
+                    case 1:
+                        RequestTabIconChange(codeEditor.Global.IconImages.Wave1);
+                        break;
+                    case 2:
+                        RequestTabIconChange(codeEditor.Global.IconImages.Wave2);
+                        break;
+                    case 3:
+                        RequestTabIconChange(codeEditor.Global.IconImages.Wave3);
+                        break;
+                    case 4:
+                        RequestTabIconChange(codeEditor.Global.IconImages.Wave4);
+                        break;
+                    case 5:
+                        RequestTabIconChange(codeEditor.Global.IconImages.Wave5);
+                        break;
+                }
+            }
         }
 
         private void disposed(object sender, EventArgs e)
@@ -95,10 +126,9 @@ namespace pluginVivado
                 sw.Write("call "+Setup.BinPath + "xvlog ^\r\n");
                 if (includeFileList.Count != 0)
                 {
-                    sw.Write("-i ");
                     foreach (string includePath in includeFileList)
                     {
-                        sw.Write(" ^\r\n \"" + getShortPath(includePath) + "\""); // path with space is not accepted
+                        sw.Write("-i \"" + includePath + "\" ^"); // path with space is not accepted
                     }
                 }
                 foreach (string absolutePath in filePathList) 
