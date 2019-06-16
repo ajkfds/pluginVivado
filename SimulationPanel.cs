@@ -35,37 +35,41 @@ namespace pluginVivado
             thread.Start();
         }
 
-        public Action<ajkControls.IconImage> RequestTabIconChange;
+        public Action<ajkControls.IconImage,ajkControls.IconImage.ColorStyle> RequestTabIconChange;
 
-        private int iconCount = 0;
         private void receiveLineString(string lineString)
         {
             logView.AppendLogLine(lineString);
+            moveTabIcon(ajkControls.IconImage.ColorStyle.White);
+        }
 
+        private int iconCount = 0;
+        private void moveTabIcon(ajkControls.IconImage.ColorStyle color)
+        {
             iconCount++;
             if (iconCount > 5) iconCount = 0;
 
-            if(RequestTabIconChange != null)
+            if (RequestTabIconChange != null)
             {
                 switch (iconCount)
                 {
                     case 0:
-                        RequestTabIconChange(codeEditor.Global.IconImages.Wave0);
+                        RequestTabIconChange(codeEditor.Global.IconImages.Wave0, color);
                         break;
                     case 1:
-                        RequestTabIconChange(codeEditor.Global.IconImages.Wave1);
+                        RequestTabIconChange(codeEditor.Global.IconImages.Wave1, color);
                         break;
                     case 2:
-                        RequestTabIconChange(codeEditor.Global.IconImages.Wave2);
+                        RequestTabIconChange(codeEditor.Global.IconImages.Wave2, color);
                         break;
                     case 3:
-                        RequestTabIconChange(codeEditor.Global.IconImages.Wave3);
+                        RequestTabIconChange(codeEditor.Global.IconImages.Wave3, color);
                         break;
                     case 4:
-                        RequestTabIconChange(codeEditor.Global.IconImages.Wave4);
+                        RequestTabIconChange(codeEditor.Global.IconImages.Wave4, color);
                         break;
                     case 5:
-                        RequestTabIconChange(codeEditor.Global.IconImages.Wave5);
+                        RequestTabIconChange(codeEditor.Global.IconImages.Wave5, color);
                         break;
                 }
             }
@@ -73,12 +77,14 @@ namespace pluginVivado
 
         private void disposed(object sender, EventArgs e)
         {
+            abort = true;
+            RequestTabIconChange = null;
             shell.Dispose();
         }
 
         ajkControls.CommandShell shell = null;
-
         System.Threading.Thread thread = null;
+        private volatile bool abort = false;
 
         private void run()
         {
@@ -156,7 +162,7 @@ namespace pluginVivado
             }
 
 
-
+            if (abort) return;
             shell = new ajkControls.CommandShell(new List<string> {
                 "prompt xSimVerilogShell$G$_",
                 "cd "+simulationPath
@@ -164,11 +170,18 @@ namespace pluginVivado
             shell.LineReceived += receiveLineString;
             shell.Start();
 
-            while (shell.GetLastLine() != "xSimVerilogShell>") { System.Threading.Thread.Sleep(10); }
+            while (shell.GetLastLine() != "xSimVerilogShell>") {
+                if (abort) return;
+                System.Threading.Thread.Sleep(10);
+            }
             shell.ClearLogs();
             shell.StartLogging();
             shell.Execute("command.bat");
-            while (shell.GetLastLine() != "xSimVerilogShell>") { System.Threading.Thread.Sleep(10); }
+            while (shell.GetLastLine() != "%xsim") {
+                if (abort) return;
+                System.Threading.Thread.Sleep(10);
+            }
+            RequestTabIconChange(codeEditor.Global.IconImages.Wave0, ajkControls.IconImage.ColorStyle.Green);
             List<string> logs = shell.GetLogs();
             if (logs.Count != 3 || logs[1] != "")
             {

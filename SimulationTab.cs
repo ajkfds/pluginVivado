@@ -18,21 +18,16 @@ namespace pluginVivado
             Controls.Add(panel);
         }
 
-        private void changeIcon(ajkControls.IconImage iconImage)
+        private void changeIcon(ajkControls.IconImage iconImage,ajkControls.IconImage.ColorStyle color)
         {
             Invoke(new Action(
                 () => {
                     IconImage = iconImage;
+                    IconColor = color;
                     Invalidate();
                 }
                 ));
         }
 
-        public override void CloseButtonClicked()
-        {
-            codeEditor.Global.Controller.Tabs.RemovePage(this);
-            panel.Dispose();
-            Dispose();
-        }
     }
 }
