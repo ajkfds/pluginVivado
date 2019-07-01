@@ -126,33 +126,68 @@ namespace pluginVivado
             pluginVerilog.Verilog.Module topModule = topParsedDocument.Modules.FirstOrDefault().Value;
             if (topModule == null) return;
 
+            // create project file
+            // verilog<work_library> < file_names > ... [-d<macro>]...[-i<include_path>]...
+            // vhdl<work_library> <file_name>
+            // sv<work_library> <file_name>
+            using (System.IO.StreamWriter sw = new System.IO.StreamWriter(simulationPath + "\\"+ simName+".prj"))
+            {
+                foreach (string absolutePath in filePathList)
+                {
+                    sw.Write("verilog " + absolutePath);
+                    if (includeFileList.Count != 0)
+                    {
+                        foreach (string includePath in includeFileList)
+                        {
+                            sw.Write(" -i \"" + includePath + "\""); // path with space is not accepted
+                        }
+                    }
+                    sw.Write("\r\n");
+                }
+            }
+
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter(simulationPath + "\\command.bat"))
             {
                 sw.Write("echo #compile\r\n");
-                sw.Write("call "+Setup.BinPath + "xvlog ^\r\n");
-                if (includeFileList.Count != 0)
-                {
-                    foreach (string includePath in includeFileList)
-                    {
-                        sw.Write("-i \"" + includePath + "\" ^"); // path with space is not accepted
-                    }
-                }
-                foreach (string absolutePath in filePathList) 
-                {
-                    sw.Write(" ^\r\n \""+absolutePath + "\"");
-                }
+
+                //foreach (string absolutePath in filePathList) 
+                //{
+                //    sw.Write("call "+Setup.BinPath + "xvlog ^\r\n");
+                //    if (includeFileList.Count != 0)
+                //    {
+                //        foreach (string includePath in includeFileList)
+                //        {
+                //            sw.Write("-i \"" + includePath + "\" ^\r\n"); // path with space is not accepted
+                //        }
+                //    }
+                //    sw.Write("\""+absolutePath + "\"");
+                //    sw.Write("\r\n");
+                //}
+
+                sw.Write("call " + Setup.BinPath + "xvlog -prj "+ simName + ".prj" + " ^\r\n");
+                //if (includeFileList.Count != 0)
+                //{
+                //    foreach (string includePath in includeFileList)
+                //    {
+                //        sw.Write("-i \"" + includePath + "\" ^"); // path with space is not accepted
+                //    }
+                //}
+                //foreach (string absolutePath in filePathList)
+                //{
+                //    sw.Write(" ^\r\n \"" + absolutePath + "\"");
+                //}
                 sw.Write("\r\n");
                 sw.Write("\r\n");
                 sw.Write("echo #elaboration\r\n");
                 sw.Write("call " + Setup.BinPath + "xelab ^\r\n");
                 sw.Write("--debug all ^\r\n");
                 sw.Write("--notimingchecks ^\r\n");
-                sw.Write(topModule.Name+"\r\n");
+                sw.Write(topModule.Name + "\r\n");
                 sw.Write("\r\n");
                 sw.Write("\r\n");
 
                 sw.Write("echo #simulation\r\n");
-                sw.Write("call " + Setup.BinPath + "xsim " +topModule.Name+" -t xsim_run.tcl\r\n");
+                sw.Write("call " + Setup.BinPath + "xsim " + topModule.Name + " -t xsim_run.tcl\r\n");
 
             }
 
@@ -216,8 +251,6 @@ namespace pluginVivado
                 pluginVerilog.Verilog.Module subModule = project.GetVerilogPluginProperty().GetModule(instance.ModuleName);
                 if (subModule != null) appendFiles(filePathList, includePathList, subModule, project);
             }
-
         }
-
     }
 }
