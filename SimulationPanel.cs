@@ -134,12 +134,12 @@ namespace pluginVivado
             {
                 foreach (string absolutePath in filePathList)
                 {
-                    sw.Write("verilog " + absolutePath);
+                    sw.Write("verilog "+simName+" \"" + absolutePath+"\"");
                     if (includeFileList.Count != 0)
                     {
                         foreach (string includePath in includeFileList)
                         {
-                            sw.Write(" -i \"" + includePath + "\""); // path with space is not accepted
+                            sw.Write(" -i \"" + getShortPath(includePath) + "\""); // path with space is not accepted
                         }
                     }
                     sw.Write("\r\n");
