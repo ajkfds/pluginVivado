@@ -10,7 +10,7 @@ namespace pluginVivado
     {
         public static pluginVerilog.ProjectProperty GetVerilogPluginProperty(this codeEditor.Data.Project project)
         {
-            return project.ProjectProperties[pluginVerilog.Plugin.StaticID] as pluginVerilog.ProjectProperty;
+            return project.GetProjectProperty(pluginVerilog.Plugin.StaticID) as pluginVerilog.ProjectProperty;
         }
 
     }
