@@ -103,8 +103,7 @@ namespace pluginVivado
 
             string simName = topFile.Name.Substring(0, topFile.Name.LastIndexOf('.'));
 
-
-            string simulationPath = Setup.SimulationPath + "\\" + simName;
+            string simulationPath = Setup.SimulationPath.Replace("%USERPROFILE%",Environment.GetEnvironmentVariable("USERPROFILE")) + "\\" + simName;
             if (!System.IO.Directory.Exists(simulationPath))
             {
                 System.IO.Directory.CreateDirectory(simulationPath);
