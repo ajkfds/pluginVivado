@@ -23,14 +23,14 @@ namespace pluginVivado
             //                codeEditor.Global.FileTypes.Add(fileType.ID, fileType);
             //            }
 
-            System.Windows.Forms.ContextMenuStrip menu = codeEditor.Global.Controller.NavigatePanel.GetContextMenuStrip();
+            System.Windows.Forms.ContextMenuStrip menu = codeEditor.Controller.NavigatePanel.GetContextMenuStrip();
             menu.Items.Insert(0,Global.SetupForm.XilinxTsmi);
 
             pluginVerilog.NavigatePanel.VerilogFileNode.NodeCreated += new Action<pluginVerilog.NavigatePanel.VerilogFileNode>(
                 node => {
                     node.NodeSelected += new Action(
                         () => {
-                            codeEditor.Global.Controller.NavigatePanel.GetContextMenuStrip().Items["XilinxTsmi"].Visible = true;
+                            codeEditor.Controller.NavigatePanel.GetContextMenuStrip().Items["XilinxTsmi"].Visible = true;
                         }
                         );
                 }
