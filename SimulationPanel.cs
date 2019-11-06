@@ -39,7 +39,14 @@ namespace pluginVivado
 
         private void receiveLineString(string lineString)
         {
-            logView.AppendLogLine(lineString);
+            if (lineString == "xSimVerilogShell>")
+            {
+                logView.AppendLogLine(lineString, System.Drawing.Color.ForestGreen);
+            }
+            else
+            {
+                logView.AppendLogLine(lineString);
+            }
             moveTabIcon(ajkControls.IconImage.ColorStyle.White);
         }
 
