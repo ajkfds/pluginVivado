@@ -27,20 +27,21 @@ namespace pluginVivado
 
         private void RunXSimTsmi_Click(object sender, EventArgs e)
         {
+            return;
             string projectName, id;
-            codeEditor.Controller.NavigatePanel.GetSelectedNode(out projectName, out id);
+            //codeEditor.Controller.NavigatePanel.GetSelectedNode(out projectName, out id);
 
-            codeEditor.Data.Project project = codeEditor.Global.Projects[projectName];
-            pluginVerilog.Data.VerilogFile topFile = project.GetRegisterdItem(id) as pluginVerilog.Data.VerilogFile;
-            if (topFile == null) return;
+            //codeEditor.Data.Project project = codeEditor.Global.Projects[projectName];
+            //pluginVerilog.Data.VerilogFile topFile = project.GetRegisterdItem(id) as pluginVerilog.Data.VerilogFile;
+            //if (topFile == null) return;
 
             //ajkControls.TabPage page = new IcarusVerilog.SimulationTab(topFile);
             //codeEditor.Controller.Tabs.AddPage(page);
 
 //            SimulationPanel panel = new SimulationPanel(topFile);
-            codeEditor.Tabs.MainTabPage mainTabPage = new SimulationTab(topFile);
+//            codeEditor.Tabs.MainTabPage mainTabPage = new SimulationTab(topFile);
 //            codeEditor.Controller.MainTabPage mainTabPage = new codeEditor.Controller.MainTabPage(panel, topFile.Name);
-            codeEditor.Controller.Tabs.AddPage(mainTabPage);
+//            codeEditor.Controller.Tabs.AddPage(mainTabPage);
         }
 
         private void VivadoGUITsmi_Click(object sender, EventArgs e)

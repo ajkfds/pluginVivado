@@ -97,7 +97,7 @@ namespace pluginVivado
         {
             string projectName;
             string topId;
-            codeEditor.Controller.NavigatePanel.GetSelectedNode(out projectName, out topId);
+/*            codeEditor.Controller.NavigatePanel.GetSelectedNode(out projectName, out topId);
             if (projectName == "" || topId == "") return;
             if (!codeEditor.Global.Projects.ContainsKey(projectName)) return;
             codeEditor.Data.Project project = codeEditor.Global.Projects[projectName];
@@ -231,32 +231,33 @@ namespace pluginVivado
             shell.EndLogging();
 //            shell.Execute(Setup.BinPath + "vvp " + simName + ".o");
 
-
+    */
         }
 
         private void appendFiles(List<string> filePathList, List<string> includePathList, pluginVerilog.Verilog.Module module, codeEditor.Data.Project project)
         {
-            string fileId = module.FileId;
-            pluginVerilog.Data.VerilogFile file = project.GetRegisterdItem(fileId) as pluginVerilog.Data.VerilogFile;
-            if (file == null) return;
-            string absolutePath = project.GetAbsolutePath(file.RelativePath);
-            if (!filePathList.Contains(absolutePath)) filePathList.Add(absolutePath);
+            return;
+            //string fileId = module.FileId;
+            //pluginVerilog.Data.VerilogFile file = project.GetRegisterdItem(fileId) as pluginVerilog.Data.VerilogFile;
+            //if (file == null) return;
+            //string absolutePath = project.GetAbsolutePath(file.RelativePath);
+            //if (!filePathList.Contains(absolutePath)) filePathList.Add(absolutePath);
 
-            if (file.VerilogParsedDocument == null) return;
+            //if (file.VerilogParsedDocument == null) return;
 
-            // includes
-            foreach (var include in file.VerilogParsedDocument.IncludeFiles.Values)
-            {
-                string includePath = project.GetAbsolutePath(include.RelativePath);
-                includePath = includePath.Substring(0, includePath.LastIndexOf('\\'));
-                if (!includePathList.Contains(includePath)) includePathList.Add(includePath);
-            }
+            //// includes
+            //foreach (var include in file.VerilogParsedDocument.IncludeFiles.Values)
+            //{
+            //    string includePath = project.GetAbsolutePath(include.RelativePath);
+            //    includePath = includePath.Substring(0, includePath.LastIndexOf('\\'));
+            //    if (!includePathList.Contains(includePath)) includePathList.Add(includePath);
+            //}
 
-            foreach (pluginVerilog.Verilog.ModuleItems.ModuleInstantiation instance in module.ModuleInstantiations.Values)
-            {
-                pluginVerilog.Verilog.Module subModule = project.GetVerilogPluginProperty().GetModule(instance.ModuleName);
-                if (subModule != null) appendFiles(filePathList, includePathList, subModule, project);
-            }
+            //foreach (pluginVerilog.Verilog.ModuleItems.ModuleInstantiation instance in module.ModuleInstantiations.Values)
+            //{
+            //    pluginVerilog.Verilog.Module subModule = project.GetVerilogPluginProperty().GetModule(instance.ModuleName);
+            //    if (subModule != null) appendFiles(filePathList, includePathList, subModule, project);
+            //}
         }
     }
 }
