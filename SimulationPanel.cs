@@ -95,14 +95,14 @@ namespace pluginVivado
 
         private void run()
         {
-            string projectName;
-            string topId;
-/*            codeEditor.Controller.NavigatePanel.GetSelectedNode(out projectName, out topId);
-            if (projectName == "" || topId == "") return;
-            if (!codeEditor.Global.Projects.ContainsKey(projectName)) return;
-            codeEditor.Data.Project project = codeEditor.Global.Projects[projectName];
+            codeEditor.NavigatePanel.NavigatePanelNode node;
+            codeEditor.Controller.NavigatePanel.GetSelectedNode(out node);
+            pluginVerilog.NavigatePanel.VerilogFileNode verilogFileNode = node as pluginVerilog.NavigatePanel.VerilogFileNode;
+            if (node == null) return;
 
-            pluginVerilog.Data.VerilogFile topFile = project.GetRegisterdItem(topId) as pluginVerilog.Data.VerilogFile;
+            pluginVerilog.Data.VerilogFile topFile = verilogFileNode.VerilogFile;
+            codeEditor.Data.Project project = topFile.Project;
+
             if (topFile == null) return;
             pluginVerilog.Verilog.ParsedDocument topParsedDocument = topFile.ParsedDocument as pluginVerilog.Verilog.ParsedDocument;
             if (topParsedDocument == null) return;
@@ -110,7 +110,8 @@ namespace pluginVivado
 
             string simName = topFile.Name.Substring(0, topFile.Name.LastIndexOf('.'));
 
-            string simulationPath = Setup.SimulationPath.Replace("%USERPROFILE%",Environment.GetEnvironmentVariable("USERPROFILE")) + "\\" + simName;
+
+            string simulationPath = Setup.SimulationPath + "\\" + simName;
             if (!System.IO.Directory.Exists(simulationPath))
             {
                 System.IO.Directory.CreateDirectory(simulationPath);
@@ -229,9 +230,7 @@ namespace pluginVivado
                 return;
             }
             shell.EndLogging();
-//            shell.Execute(Setup.BinPath + "vvp " + simName + ".o");
 
-    */
         }
 
         private void appendFiles(List<string> filePathList, List<string> includePathList, pluginVerilog.Verilog.Module module, codeEditor.Data.Project project)

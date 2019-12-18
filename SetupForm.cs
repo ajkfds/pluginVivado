@@ -36,7 +36,7 @@ namespace pluginVivado
             pluginVerilog.Data.VerilogFile topFile = vnode.VerilogFile;
             if (topFile == null) return;
 
-            SimulationPanel panel = new SimulationPanel(topFile);
+           // SimulationPanel panel = new SimulationPanel(topFile);
             codeEditor.Tabs.MainTabPage mainTabPage = new SimulationTab(topFile);
             codeEditor.Controller.Tabs.AddPage(mainTabPage);
         }
