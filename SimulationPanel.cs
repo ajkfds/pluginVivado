@@ -256,7 +256,7 @@ namespace pluginVivado
 
             foreach (pluginVerilog.Verilog.ModuleItems.ModuleInstantiation instance in module.ModuleInstantiations.Values)
             {
-                pluginVerilog.Verilog.Module subModule = (project.GetProjectProperty(pluginVerilog.Plugin.StaticID) as pluginVerilog.ProjectProperty).GetModule(instance.ModuleName);
+                pluginVerilog.Verilog.Module subModule = (project.ProjectProperties[pluginVerilog.Plugin.StaticID] as pluginVerilog.ProjectProperty).GetModule(instance.ModuleName);
                 if (subModule != null) appendFiles(filePathList, includePathList, subModule, project);
             }
         }
