@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ajkControls.Primitive;
 
 namespace pluginVivado
 {
@@ -35,7 +36,7 @@ namespace pluginVivado
             thread.Start();
         }
 
-        public Action<ajkControls.IconImage,ajkControls.IconImage.ColorStyle> RequestTabIconChange;
+        public Action<IconImage,IconImage.ColorStyle> RequestTabIconChange;
 
         private void receiveLineString(string lineString)
         {
@@ -50,11 +51,11 @@ namespace pluginVivado
             {
                 logView.AppendLogLine(lineString);
             }
-            moveTabIcon(ajkControls.IconImage.ColorStyle.White);
+            moveTabIcon(IconImage.ColorStyle.White);
         }
 
         private int iconCount = 0;
-        private void moveTabIcon(ajkControls.IconImage.ColorStyle color)
+        private void moveTabIcon(IconImage.ColorStyle color)
         {
             iconCount++;
             if (iconCount > 5) iconCount = 0;
@@ -226,7 +227,7 @@ namespace pluginVivado
                 if (abort) return;
                 System.Threading.Thread.Sleep(10);
             }
-            RequestTabIconChange(codeEditor.Global.IconImages.Wave0, ajkControls.IconImage.ColorStyle.Green);
+            RequestTabIconChange(codeEditor.Global.IconImages.Wave0, IconImage.ColorStyle.Green);
             List<string> logs = shell.GetLogs();
             if (logs.Count != 3 || logs[1] != "")
             {

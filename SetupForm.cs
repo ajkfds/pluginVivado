@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ajkControls.Primitive;
 
 namespace pluginVivado
 {
@@ -18,11 +19,11 @@ namespace pluginVivado
 
             runXSimTsmi.Image = codeEditor.Global.IconImages.Play.GetImage(
                codeEditor.Controller.NavigatePanel.GetContextMenuStrip().ImageScalingSize.Height,
-               ajkControls.IconImage.ColorStyle.Blue);
+               IconImage.ColorStyle.Blue);
 
             XilinxTsmi.Image = Global.Icons.Xilinx.GetImage(
                codeEditor.Controller.NavigatePanel.GetContextMenuStrip().ImageScalingSize.Height,
-               ajkControls.IconImage.ColorStyle.Original);
+               IconImage.ColorStyle.Original);
         }
 
         private void RunXSimTsmi_Click(object sender, EventArgs e)

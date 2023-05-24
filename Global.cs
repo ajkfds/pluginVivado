@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ajkControls.Primitive;
 
 namespace pluginVivado
 {
@@ -13,11 +14,11 @@ namespace pluginVivado
 
         public static class Icons
         {
-            //public static ajkControls.IconImage Exclamation = new ajkControls.IconImage(Properties.Resources.exclamation);
-            //public static ajkControls.IconImage ExclamationBox = new ajkControls.IconImage(Properties.Resources.exclamationBox);
-            public static ajkControls.IconImage Play = new ajkControls.IconImage(Properties.Resources.play);
-            public static ajkControls.IconImage Pause = new ajkControls.IconImage(Properties.Resources.pause);
-            public static ajkControls.IconImage Xilinx = new ajkControls.IconImage(Properties.Resources.xilinx);
+            //public static IconImage Exclamation = new IconImage(Properties.Resources.exclamation);
+            //public static IconImage ExclamationBox = new IconImage(Properties.Resources.exclamationBox);
+            public static IconImage Play = new IconImage(Properties.Resources.play);
+            public static IconImage Pause = new IconImage(Properties.Resources.pause);
+            public static IconImage Xilinx = new IconImage(Properties.Resources.xilinx);
         }
     }
 }
